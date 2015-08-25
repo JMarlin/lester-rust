@@ -9,10 +9,12 @@ struct Philosopher {
 
 impl Philosopher {
 
-	fn new(name: &str) -> Philosopher {
+	fn new(name: &str, left: usize, right: usize) -> Philosopher {
 		
 		Philosopher {
-			name: name.to_string()
+			name:  name.to_string(),
+			left:  left,
+			right: right
 		}
 	}
 	
