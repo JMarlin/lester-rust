@@ -31,8 +31,16 @@ fn main() {
 		Philosopher::new("Michel Foucault")
 	];
 	
-	for p in &philosophers {
+	let handles: Vec<_> = philosophers.into_iter().map(|p| {
+		
+		thread::spawn(move || {
+			
+			p.eat();
+		})
+	}).collect();
 	
-		p.eat();
+	for h in handles {
+	
+		h.join().unwrap();
 	}
 }
