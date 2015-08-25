@@ -3,3 +3,7 @@
 name = "lester-rust"
 version = "0.0.1"
 authors = [ "Joseph Marlin <j.marlin@outlook.com>" ]
+
+[dependencies]
+
+rand="0.3.0"
