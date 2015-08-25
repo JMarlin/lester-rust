@@ -1,7 +1,10 @@
 use std::thread;
+use std::sync::{Mutex, Arc};
 
 struct Philosopher {
-	name: String
+	name:  String,
+	left:  usize,
+	right: usize
 }
 
 impl Philosopher {
@@ -21,7 +24,19 @@ impl Philosopher {
 	}
 }
 
+struct Table {
+	forks: Vec<Mutex<()>>
+}
+
 fn main() {
+
+	let table = Arc::new(Table {forks: vec![
+		Mutex::new(()),
+		Mutex::new(()),
+		Mutex::new(()),
+		Mutex::new(()),
+		Mutex::new(())
+	]});
 
 	let philosophers = vec![
 		Philosopher::new("Judith Butler"),
@@ -32,6 +47,8 @@ fn main() {
 	];
 	
 	let handles: Vec<_> = philosophers.into_iter().map(|p| {
+		
+		let table = table.clone();
 		
 		thread::spawn(move || {
 			
