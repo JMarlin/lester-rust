@@ -18,8 +18,11 @@ impl Philosopher {
 		}
 	}
 	
-	fn eat(&self) {
-	
+	fn eat(&self, table: &Table) {
+		
+		let _left = table.forks[self.left].lock().unwrap();
+		let _right = table.forks[self.right].lock().unwrap();
+						
 		println!("{} has started eating.", self.name);
 		thread::sleep_ms(1000);
 		println!("{} is done eating.", self.name);
@@ -41,11 +44,11 @@ fn main() {
 	]});
 
 	let philosophers = vec![
-		Philosopher::new("Judith Butler"),
-		Philosopher::new("Gilles Deleuze"),
-		Philosopher::new("Karl Marx"),
-		Philosopher::new("Emma Goldman"),
-		Philosopher::new("Michel Foucault")
+		Philosopher::new("Judith Butler", 0, 1),
+		Philosopher::new("Gilles Deleuze", 1, 2),
+		Philosopher::new("Karl Marx", 2, 3),
+		Philosopher::new("Emma Goldman", 3, 4),
+		Philosopher::new("Michel Foucault", 4, 0)
 	];
 	
 	let handles: Vec<_> = philosophers.into_iter().map(|p| {
@@ -54,7 +57,7 @@ fn main() {
 		
 		thread::spawn(move || {
 			
-			p.eat();
+			p.eat(&table);
 		})
 	}).collect();
 	
