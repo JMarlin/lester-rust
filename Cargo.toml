@@ -6,8 +6,6 @@ authors = [ "Joseph Marlin <j.marlin@outlook.com>" ]
 
 [dependencies]
 
-rand="0.3.0"
-
 [lib]
 name = "lester"
 crate-type = ["dylib"]
