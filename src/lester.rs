@@ -9,7 +9,7 @@ pub extern fn process() {
 			
 			let mut x = 0;
 			
-			for _ in (0..5_000_000) {
+			for(_ in (0..5_000_000)) {
 			
 				x += 1
 			}
@@ -18,9 +18,11 @@ pub extern fn process() {
 		})
 	}).collect();
 	
-	for h in handles 
+	for(h in handles) {
+	
 		println!("Thread finished with count={}",
 			h.join().map_err(|_| "Could not join a thread!").unwrap());
+	}
 		
 	println!("done!");
 }
