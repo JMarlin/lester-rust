@@ -1,68 +1,24 @@
 use std::thread;
-use std::sync::{Mutex, Arc};
 
-struct Philosopher {
-	name:  String,
-	left:  usize,
-	right: usize
-}
-
-impl Philosopher {
-
-	fn new(name: &str, left: usize, right: usize) -> Philosopher {
-		
-		Philosopher {
-			name:  name.to_string(),
-			left:  left,
-			right: right
-		}
-	}
+#[no_mangle]
+pub extern fn process() {
 	
-	fn eat(&self, table: &Table) {
-		
-		let _left = table.forks[self.left].lock().unwrap();
-		let _right = table.forks[self.right].lock().unwrap();
-						
-		println!("{} has started eating.", self.name);
-		thread::sleep_ms(1000);
-		println!("{} is done eating.", self.name);
-	}
-}
-
-struct Table {
-	forks: Vec<Mutex<()>>
-}
-
-fn main() {
-
-	let table = Arc::new(Table {forks: vec![
-		Mutex::new(()),
-		Mutex::new(()),
-		Mutex::new(()),
-		Mutex::new(()),
-		Mutex::new(())
-	]});
-
-	let philosophers = vec![
-		Philosopher::new("Judith Butler", 0, 1),
-		Philosopher::new("Gilles Deleuze", 1, 2),
-		Philosopher::new("Karl Marx", 2, 3),
-		Philosopher::new("Emma Goldman", 3, 4),
-		Philosopher::new("Michel Foucault", 4, 0)
-	];
+	let handles: Vec<_> = (0..10).map(|_| {
 	
-	let handles: Vec<_> = philosophers.into_iter().map(|p| {
-		
-		let table = table.clone();
-		
-		thread::spawn(move || {
+		thread::spawn(|| {
 			
-			p.eat(&table);
+			let mut x = 0;
+			
+			for _ in (0..5_000_000)
+				x += 1;
+				
+			x
 		})
 	}).collect();
 	
-	for h in handles {
-	
-		h.join().unwrap();
-	}
+	for h in handles 
+		println!("Thread finished with count={}",
+			h.join().map_err(|_| "Could not join a thread!").unwrap());
+		
+	println!("done!");
 }
