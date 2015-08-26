@@ -13,6 +13,6 @@ threads = []
 end
 
 threads.each do |t|
-	puts "Thread finished with count=#(t.value)"
+	puts "Thread finished with count=#{t.value}"
 end
 puts "done!"
