@@ -9,8 +9,10 @@ pub extern fn process() {
 			
 			let mut x = 0;
 			
-			for _ in (0..5_000_000)
-				x += 1;
+			for _ in (0..5_000_000) {
+			
+				x += 1
+			}
 				
 			x
 		})
