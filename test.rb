@@ -2,7 +2,7 @@ require 'ffi'
 
 module Hello
 	extend FFI::Library
-	ffi_lib 'target/release/libembed.so'
+	ffi_lib 'target/release/liblester.so'
 	attach_function :process, [], :void
 end
 
