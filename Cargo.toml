@@ -1,11 +1,4 @@
 [package]
-
-name = "lester"
-version = "0.0.1"
-authors = [ "Joseph Marlin <j.marlin@outlook.com>" ]
-
-[dependencies]
-
-[lib]
-name = "lester"
-crate-type = ["dylib"]
+name = "lester-rust"
+version = "0.1.0"
+authors = ["joe"]
